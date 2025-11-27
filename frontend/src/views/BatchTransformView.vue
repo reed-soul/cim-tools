@@ -20,23 +20,30 @@
               <el-select 
                 v-model="sourceCrs" 
                 placeholder="选择源坐标系" 
-                class="full-width"
+                class="full-width coordinate-select"
+                popper-class="coordinate-select-dropdown"
                 filterable
               >
-                <el-option
-                  v-for="system in supportedSystems"
-                  :key="system.code"
-                  :label="`${system.name} (${system.code})`"
-                  :value="system.code"
+                <el-option-group
+                  v-for="group in groupedSystems"
+                  :key="group.label"
+                  :label="group.label"
                 >
-                  <div class="option-content">
-                    <div class="option-header">
-                      <span class="option-name">{{ system.name }}</span>
-                      <span class="option-code">({{ system.code }})</span>
+                  <el-option
+                    v-for="system in group.options"
+                    :key="system.code"
+                    :label="`${system.name} (${system.code})`"
+                    :value="system.code"
+                  >
+                    <div class="option-content">
+                      <div class="option-header">
+                        <span class="option-name">{{ system.name }}</span>
+                        <span class="option-code">({{ system.code }})</span>
+                      </div>
+                      <span class="option-desc">{{ system.description }}</span>
                     </div>
-                    <span class="option-desc">{{ system.description }}</span>
-                  </div>
-                </el-option>
+                  </el-option>
+                </el-option-group>
               </el-select>
             </el-form-item>
             
@@ -44,23 +51,30 @@
               <el-select 
                 v-model="targetCrs" 
                 placeholder="选择目标坐标系" 
-                class="full-width"
+                class="full-width coordinate-select"
+                popper-class="coordinate-select-dropdown"
                 filterable
               >
-                <el-option
-                  v-for="system in supportedSystems"
-                  :key="system.code"
-                  :label="`${system.name} (${system.code})`"
-                  :value="system.code"
+                <el-option-group
+                  v-for="group in groupedSystems"
+                  :key="group.label"
+                  :label="group.label"
                 >
-                  <div class="option-content">
-                    <div class="option-header">
-                      <span class="option-name">{{ system.name }}</span>
-                      <span class="option-code">({{ system.code }})</span>
+                  <el-option
+                    v-for="system in group.options"
+                    :key="system.code"
+                    :label="`${system.name} (${system.code})`"
+                    :value="system.code"
+                  >
+                    <div class="option-content">
+                      <div class="option-header">
+                        <span class="option-name">{{ system.name }}</span>
+                        <span class="option-code">({{ system.code }})</span>
+                      </div>
+                      <span class="option-desc">{{ system.description }}</span>
                     </div>
-                    <span class="option-desc">{{ system.description }}</span>
-                  </div>
-                </el-option>
+                  </el-option>
+                </el-option-group>
               </el-select>
             </el-form-item>
             
@@ -212,6 +226,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
+import { storeToRefs } from 'pinia'
 import { ElMessage } from 'element-plus'
 import { UploadFilled, EditPen, Upload, InfoFilled, Document, Download, Box, MapLocation, Refresh, RefreshRight } from '@element-plus/icons-vue'
 import type { UploadFile } from 'element-plus'
@@ -232,7 +247,7 @@ interface TableRow {
 
 const coordinateStore = useCoordinateStore()
 
-// 从store中获取状态和方法
+// 使用 storeToRefs 解构响应式状态
 const {
   sourceCrs,
   targetCrs,
@@ -241,7 +256,12 @@ const {
   isLoading,
   error,
   supportedSystems,
-  hasBatchResults,
+  groupedSystems,
+  hasBatchResults
+} = storeToRefs(coordinateStore)
+
+// 方法直接从 store 实例获取
+const {
   transformBatch,
   transformFile,
   setSourceCrs,
@@ -258,10 +278,6 @@ const fileList = ref<UploadFile[]>([])
 const mapVisible = ref(false)
 const map = ref<any>(null)
 const uploadRef = ref()
-const sourceSearchQuery = ref('')
-const targetSearchQuery = ref('')
-const filteredSourceSystems = ref(supportedSystems.value)
-const filteredTargetSystems = ref(supportedSystems.value)
 
 // 表单数据
 const form = computed(() => ({
@@ -282,44 +298,9 @@ const tableData = computed((): TableRow[] => {
   }))
 })
 
-// 过滤源坐标系
-const filterSourceSystems = (query: string) => {
-  if (!query || !supportedSystems.value) {
-    filteredSourceSystems.value = supportedSystems.value || []
-    return
-  }
-  
-  const lowerQuery = query.toLowerCase()
-  filteredSourceSystems.value = supportedSystems.value.filter(system => 
-    system.code.toLowerCase().includes(lowerQuery) || 
-    system.name.toLowerCase().includes(lowerQuery) || 
-    system.description.toLowerCase().includes(lowerQuery)
-  )
-}
-
-// 过滤目标坐标系
-const filterTargetSystems = (query: string) => {
-  if (!query || !supportedSystems.value) {
-    filteredTargetSystems.value = supportedSystems.value || []
-    return
-  }
-  
-  const lowerQuery = query.toLowerCase()
-  filteredTargetSystems.value = supportedSystems.value.filter(system => 
-    system.code.toLowerCase().includes(lowerQuery) || 
-    system.name.toLowerCase().includes(lowerQuery) || 
-    system.description.toLowerCase().includes(lowerQuery)
-  )
-}
-
 // 初始化
 onMounted(() => {
   coordinateStore.initialize()
-  // 确保在初始化后设置过滤后的系统
-  setTimeout(() => {
-    filteredSourceSystems.value = supportedSystems.value
-    filteredTargetSystems.value = supportedSystems.value
-  }, 100)
 })
 
 // 处理转换
@@ -476,6 +457,56 @@ const showOnMap = async (row: TableRow) => {
 
 .full-width {
   width: 100%;
+  max-width: 100%;
+}
+
+/* 限制下拉框弹出层宽度 */
+.coordinate-select {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 确保输入框不会超出容器 */
+.transform-form .el-form-item {
+  max-width: 100%;
+}
+
+.transform-form .el-select {
+  max-width: 100%;
+}
+
+/* 使用 popper-class 控制下拉框宽度 */
+:deep(.coordinate-select-dropdown) {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+:deep(.coordinate-select-dropdown .el-select-dropdown__wrap) {
+  max-width: 600px !important;
+}
+
+/* 全局下拉框宽度限制（备用方案） */
+:deep(.el-select-dropdown) {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+:deep(.el-select-dropdown__wrap) {
+  max-width: 600px !important;
+}
+
+/* 分组标签样式 */
+:deep(.el-select-group__title) {
+  font-size: 13px;
+  font-weight: 600;
+  color: #409eff;
+  padding: 8px 12px;
+  background-color: #f5f7fa;
+  border-bottom: 1px solid #e4e7ed;
+}
+
+:deep(.el-select-group__wrap:not(:last-of-type)) {
+  border-bottom: 1px solid #e4e7ed;
 }
 
 .option-content {

@@ -20,23 +20,30 @@
               <el-select 
                 v-model="sourceCrs" 
                 placeholder="选择源坐标系" 
-                class="full-width"
+                class="full-width coordinate-select"
+                popper-class="coordinate-select-dropdown"
                 filterable
               >
-                <el-option
-                  v-for="system in supportedSystems"
-                  :key="system.code"
-                  :label="`${system.name} (${system.code})`"
-                  :value="system.code"
+                <el-option-group
+                  v-for="group in groupedSystems"
+                  :key="group.label"
+                  :label="group.label"
                 >
-                  <div class="option-content">
-                    <div class="option-header">
-                      <span class="option-name">{{ system.name }}</span>
-                      <span class="option-code">({{ system.code }})</span>
+                  <el-option
+                    v-for="system in group.options"
+                    :key="system.code"
+                    :label="`${system.name} (${system.code})`"
+                    :value="system.code"
+                  >
+                    <div class="option-content">
+                      <div class="option-header">
+                        <span class="option-name">{{ system.name }}</span>
+                        <span class="option-code">({{ system.code }})</span>
+                      </div>
+                      <span class="option-desc">{{ system.description }}</span>
                     </div>
-                    <span class="option-desc">{{ system.description }}</span>
-                  </div>
-                </el-option>
+                  </el-option>
+                </el-option-group>
               </el-select>
             </el-form-item>
             
@@ -44,23 +51,30 @@
               <el-select 
                 v-model="targetCrs" 
                 placeholder="选择目标坐标系" 
-                class="full-width"
+                class="full-width coordinate-select"
+                popper-class="coordinate-select-dropdown"
                 filterable
               >
-                <el-option
-                  v-for="system in supportedSystems"
-                  :key="system.code"
-                  :label="`${system.name} (${system.code})`"
-                  :value="system.code"
+                <el-option-group
+                  v-for="group in groupedSystems"
+                  :key="group.label"
+                  :label="group.label"
                 >
-                  <div class="option-content">
-                    <div class="option-header">
-                      <span class="option-name">{{ system.name }}</span>
-                      <span class="option-code">({{ system.code }})</span>
+                  <el-option
+                    v-for="system in group.options"
+                    :key="system.code"
+                    :label="`${system.name} (${system.code})`"
+                    :value="system.code"
+                  >
+                    <div class="option-content">
+                      <div class="option-header">
+                        <span class="option-name">{{ system.name }}</span>
+                        <span class="option-code">({{ system.code }})</span>
+                      </div>
+                      <span class="option-desc">{{ system.description }}</span>
                     </div>
-                    <span class="option-desc">{{ system.description }}</span>
-                  </div>
-                </el-option>
+                  </el-option>
+                </el-option-group>
               </el-select>
             </el-form-item>
             
@@ -257,6 +271,7 @@ const {
   isLoading,
   error,
   supportedSystems,
+  groupedSystems,
   hasResult
 } = storeToRefs(coordinateStore)
 
@@ -472,6 +487,56 @@ const addToBatch = () => {
 
 .full-width {
   width: 100%;
+  max-width: 100%;
+}
+
+/* 限制下拉框弹出层宽度 */
+.coordinate-select {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 确保输入框不会超出容器 */
+.transform-form .el-form-item {
+  max-width: 100%;
+}
+
+.transform-form .el-select {
+  max-width: 100%;
+}
+
+/* 使用 popper-class 控制下拉框宽度 */
+:deep(.coordinate-select-dropdown) {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+:deep(.coordinate-select-dropdown .el-select-dropdown__wrap) {
+  max-width: 600px !important;
+}
+
+/* 全局下拉框宽度限制（备用方案） */
+:deep(.el-select-dropdown) {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+:deep(.el-select-dropdown__wrap) {
+  max-width: 600px !important;
+}
+
+/* 分组标签样式 */
+:deep(.el-select-group__title) {
+  font-size: 13px;
+  font-weight: 600;
+  color: #409eff;
+  padding: 8px 12px;
+  background-color: #f5f7fa;
+  border-bottom: 1px solid #e4e7ed;
+}
+
+:deep(.el-select-group__wrap:not(:last-of-type)) {
+  border-bottom: 1px solid #e4e7ed;
 }
 
 .option-content {

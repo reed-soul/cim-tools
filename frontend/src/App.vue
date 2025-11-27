@@ -205,4 +205,24 @@ body {
   overflow-y: auto;
 }
 
+/* 限制坐标选择下拉框宽度 */
+.coordinate-select-dropdown {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+.coordinate-select-dropdown .el-select-dropdown__wrap {
+  max-width: 600px !important;
+}
+
+/* 全局限制所有下拉框的最大宽度（防止过宽） */
+.el-select-dropdown {
+  max-width: 600px !important;
+  width: auto !important;
+}
+
+.el-select-dropdown__wrap {
+  max-width: 600px !important;
+}
+
 </style>

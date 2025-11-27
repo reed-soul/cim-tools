@@ -242,6 +242,49 @@ export function getSupportedCoordinateSystems() {
   }))
 }
 
+// 获取分组后的坐标系列表（常用和EPSG）
+export interface GroupedCoordinateSystem {
+  label: string
+  options: Array<{ code: string; name: string; description: string }>
+}
+
+export function getGroupedCoordinateSystems(): GroupedCoordinateSystem[] {
+  const coordinateSystems = getAllEpsgCoordinateSystems()
+  const commonCodes = new Set(Object.keys(commonCoordinateSystems))
+  
+  const common: Array<{ code: string; name: string; description: string }> = []
+  const epsg: Array<{ code: string; name: string; description: string }> = []
+  
+  Object.entries(coordinateSystems).forEach(([code, system]) => {
+    const item = {
+      code,
+      name: system.name,
+      description: system.description
+    }
+    
+    if (commonCodes.has(code)) {
+      common.push(item)
+    } else {
+      epsg.push(item)
+    }
+  })
+  
+  // 按代码排序
+  common.sort((a, b) => a.code.localeCompare(b.code))
+  epsg.sort((a, b) => a.code.localeCompare(b.code))
+  
+  return [
+    {
+      label: '常用坐标系',
+      options: common
+    },
+    {
+      label: 'EPSG 坐标系',
+      options: epsg
+    }
+  ]
+}
+
 // 检查坐标系是否支持
 export function isCoordinateSystemSupported(crsCode: string): boolean {
   const coordinateSystems = getAllEpsgCoordinateSystems()

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { coordinateApi } from '@/services/api'
-import { transformCoordinate, transformCoordinates, getSupportedCoordinateSystems, initCoordinateSystems } from '@/utils/coordinate'
+import { transformCoordinate, transformCoordinates, getSupportedCoordinateSystems, getGroupedCoordinateSystems, initCoordinateSystems, type GroupedCoordinateSystem } from '@/utils/coordinate'
 
 // 定义API响应类型
 interface TransformResponse {
@@ -20,6 +20,7 @@ export const useCoordinateStore = defineStore('coordinate', () => {
   const isLoading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const supportedSystems = ref<Array<{ code: string; name: string; description: string }>>([])
+  const groupedSystems = ref<GroupedCoordinateSystem[]>([])
 
   // 计算属性
   const hasResult = computed(() => targetCoordinate.value !== null)
@@ -29,6 +30,7 @@ export const useCoordinateStore = defineStore('coordinate', () => {
   function initialize() {
     initCoordinateSystems()
     supportedSystems.value = getSupportedCoordinateSystems()
+    groupedSystems.value = getGroupedCoordinateSystems()
   }
 
   // 单点坐标转换
@@ -187,6 +189,7 @@ export const useCoordinateStore = defineStore('coordinate', () => {
     isLoading,
     error,
     supportedSystems,
+    groupedSystems,
     
     // 计算属性
     hasResult,
