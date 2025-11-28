@@ -11,6 +11,12 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Button: typeof import('./src/components/ui/Button.vue')['default']
+    Card: typeof import('./src/components/ui/Card.vue')['default']
+    Container: typeof import('./src/components/ui/Container.vue')['default']
+    CoordinateDisplay: typeof import('./src/components/CoordinateDisplay.vue')['default']
+    CoordinateInput: typeof import('./src/components/CoordinateInput.vue')['default']
+    CoordinateSystemSelector: typeof import('./src/components/CoordinateSystemSelector.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -40,14 +46,20 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    Grid: typeof import('./src/components/ui/Grid.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    InfoPanel: typeof import('./src/components/InfoPanel.vue')['default']
+    Input: typeof import('./src/components/ui/Input.vue')['default']
+    LanguageSwitcher: typeof import('./src/components/ui/LanguageSwitcher.vue')['default']
+    MapViewer: typeof import('./src/components/MapViewer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ThemeSwitcher: typeof import('./src/components/ui/ThemeSwitcher.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

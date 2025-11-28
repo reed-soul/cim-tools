@@ -1,0 +1,163 @@
+{
+  "common": {
+    "home": "Home",
+    "singleTransform": "Single Transform",
+    "batchTransform": "Batch Transform",
+    "about": "About",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "copy": "Copy",
+    "paste": "Paste",
+    "selectAll": "Select All",
+    "clear": "Clear",
+    "reset": "Reset",
+    "refresh": "Refresh",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "finish": "Finish",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "theme": {
+    "light": "Light Theme",
+    "dark": "Dark Theme",
+    "auto": "Auto",
+    "switchTheme": "Switch Theme"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "Switch Language"
+  },
+  "navigation": {
+    "home": "Home",
+    "singleTransform": "Single Transform",
+    "batchTransform": "Batch Transform",
+    "about": "About",
+    "logoTitle": "CIM Toolkit",
+    "logoSubtitle": "Professional Coordinate System Conversion Tool"
+  },
+  "home": {
+    "title": "Welcome to CIM Toolkit",
+    "subtitle": "Professional coordinate system conversion tool providing accurate and efficient coordinate conversion services",
+    "description": "Supports conversion between multiple coordinate systems, including WGS84, GCJ02, BD09, CGCS2000 and other common coordinate systems to meet coordinate conversion needs in different scenarios.",
+    "features": {
+      "accuracy": {
+        "title": "High Precision",
+        "description": "Using professional algorithms to ensure the accuracy and reliability of coordinate conversion"
+      },
+      "speed": {
+        "title": "Fast Processing",
+        "description": "Efficient computing engine supporting single point and batch coordinate conversion"
+      },
+      "multiple": {
+        "title": "Multiple Systems",
+        "description": "Supporting WGS84, GCJ02, BD09, CGCS2000 and other coordinate systems"
+      },
+      "userFriendly": {
+        "title": "User Friendly",
+        "description": "Simple and intuitive interface to reduce the threshold of use"
+      },
+      "singleTransform": {
+        "title": "Single Point Transform",
+        "description": "Support single point coordinate conversion between multiple coordinate systems"
+      },
+      "batchTransform": {
+        "title": "Batch Transform",
+        "description": "Support batch coordinate conversion to improve work efficiency"
+      },
+      "mapVisualization": {
+        "title": "Map Visualization",
+        "description": "Visually display conversion results and location information on the map"
+      },
+      "epsgSupport": {
+        "title": "EPSG Support",
+        "description": "Support standard EPSG coordinate system codes to meet professional needs"
+      }
+    },
+    "stats": {
+      "coordinates": "Coordinate Systems",
+      "conversions": "Total Conversions",
+      "users": "Active Users",
+      "accuracy": "Conversion Accuracy"
+    },
+    "startUsing": "Start Using",
+    "learnMore": "Learn More"
+  },
+  "transform": {
+    "single": {
+      "title": "Single Point Coordinate Transform",
+      "description": "Support single point coordinate conversion between multiple coordinate systems, including WGS84, GCJ02, BD09, CGCS2000 and other common coordinate systems",
+      "sourceSystem": "Source System",
+      "targetSystem": "Target System",
+      "sourceCoordinate": "Source Coordinate",
+      "targetCoordinate": "Target Coordinate",
+      "longitude": "Longitude",
+      "latitude": "Latitude",
+      "transform": "Transform",
+      "clear": "Clear",
+      "copyResult": "Copy Result",
+      "showOnMap": "Show on Map",
+      "addToBatch": "Add to Batch",
+      "instructions": "Instructions",
+      "faq": "FAQ",
+      "tips": "Tips"
+    },
+    "batch": {
+      "title": "Batch Coordinate Transform",
+      "description": "Support batch coordinate conversion to improve work efficiency",
+      "upload": "Upload File",
+      "download": "Download Result",
+      "processing": "Processing...",
+      "completed": "Conversion Completed",
+      "failed": "Conversion Failed"
+    }
+  },
+  "coordinateSystems": {
+    "wgs84": {
+      "name": "WGS84 Coordinate System",
+      "description": "World Geodetic System, coordinate system used by GPS"
+    },
+    "gcj02": {
+      "name": "GCJ02 Coordinate System",
+      "description": "Mars coordinate system used by AutoNavi and Tencent Maps"
+    },
+    "bd09": {
+      "name": "BD09 Coordinate System",
+      "description": "Baidu coordinate system used by Baidu Maps"
+    },
+    "cgcs2000": {
+      "name": "CGCS2000 Coordinate System",
+      "description": "China Geodetic Coordinate System 2000, China's official coordinate system"
+    }
+  },
+  "errors": {
+    "invalidCoordinate": "Invalid coordinate value",
+    "transformFailed": "Coordinate transformation failed",
+    "networkError": "Network connection error",
+    "fileTooLarge": "File too large",
+    "unsupportedFormat": "Unsupported file format",
+    "missingData": "Missing required data"
+  },
+  "messages": {
+    "transformSuccess": "Coordinate transformation successful",
+    "copySuccess": "Copied to clipboard",
+    "fileUploaded": "File uploaded successfully",
+    "settingsSaved": "Settings saved"
+  }
+}
+

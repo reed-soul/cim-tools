@@ -13,14 +13,23 @@ export default defineConfig({
     vue(),
     AutoImport({
       resolvers: [ElementPlusResolver()],
+      dts: true,
+      imports: ['vue', 'vue-router', '@vueuse/core'],
+      eslintrc: {
+        enabled: true,
+      },
     }),
     Components({
       resolvers: [ElementPlusResolver()],
+      dts: true,
     }),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
+  },
+  css: {
+    postcss: './postcss.config.js',
   },
 })

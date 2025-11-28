@@ -2,16 +2,20 @@
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 import { useCoordinateStore } from '@/stores/coordinate'
+import { useI18n } from 'vue-i18n'
 import { House, Location, List, InfoFilled, Coordinate } from '@element-plus/icons-vue'
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher.vue'
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher.vue'
 
 const router = useRouter()
 const coordinateStore = useCoordinateStore()
+const { t } = useI18n()
 
 const menuItems = [
-  { path: '/', name: '首页', icon: 'House' },
-  { path: '/single', name: '单点转换', icon: 'Location' },
-  { path: '/batch', name: '批量转换', icon: 'List' },
-  { path: '/about', name: '关于', icon: 'InfoFilled' }
+  { path: '/', nameKey: 'navigation.home', icon: House },
+  { path: '/single', nameKey: 'navigation.singleTransform', icon: Location },
+  { path: '/batch', nameKey: 'navigation.batchTransform', icon: List },
+  { path: '/about', nameKey: 'navigation.about', icon: InfoFilled }
 ]
 
 const navigateTo = (path: string) => {
@@ -25,204 +29,236 @@ onMounted(() => {
 
 <template>
   <div class="app-container">
+    <!-- 现代化顶部导航栏 -->
     <header class="app-header">
       <div class="header-content">
+        <!-- Logo区域 -->
         <div class="logo-container">
           <div class="logo-icon">
-            <el-icon><Coordinate /></el-icon>
+            <el-icon class="text-primary-500"><Coordinate /></el-icon>
           </div>
           <div class="logo-text">
-            <h1>CIM工具箱</h1>
-            <p class="logo-subtitle">专业的坐标系转换工具</p>
+            <h1 class="text-text-primary-light dark:text-text-primary-dark">
+              {{ t('navigation.logoTitle') }}
+            </h1>
+            <p class="logo-subtitle text-text-secondary-light dark:text-text-secondary-dark">
+              {{ t('navigation.logoSubtitle') }}
+            </p>
           </div>
+        </div>
+
+        <!-- 右侧工具栏 -->
+        <div class="header-actions">
+          <LanguageSwitcher />
+          <ThemeSwitcher />
         </div>
       </div>
     </header>
-    
+
     <div class="main-container">
+      <!-- 现代化侧边栏 -->
       <aside class="app-aside">
-        <el-menu
-          :default-active="$route.path"
-          class="app-menu"
-          @select="navigateTo"
-        >
-          <el-menu-item index="/" class="menu-item">
-            <el-icon class="menu-icon"><House /></el-icon>
-            <span class="menu-text">首页</span>
-          </el-menu-item>
-          <el-menu-item index="/single" class="menu-item">
-            <el-icon class="menu-icon"><Location /></el-icon>
-            <span class="menu-text">单点转换</span>
-          </el-menu-item>
-          <el-menu-item index="/batch" class="menu-item">
-            <el-icon class="menu-icon"><List /></el-icon>
-            <span class="menu-text">批量转换</span>
-          </el-menu-item>
-          <el-menu-item index="/about" class="menu-item">
-            <el-icon class="menu-icon"><InfoFilled /></el-icon>
-            <span class="menu-text">关于</span>
-          </el-menu-item>
-        </el-menu>
+        <nav class="nav-container">
+          <div class="nav-header">
+            <span class="nav-title text-text-primary-light dark:text-text-primary-dark">
+              导航菜单
+            </span>
+          </div>
+
+          <div class="nav-menu">
+            <router-link
+              v-for="item in menuItems"
+              :key="item.path"
+              :to="item.path"
+              class="nav-item"
+              active-class="nav-item-active"
+            >
+              <component :is="item.icon" class="nav-icon" />
+              <span class="nav-text">{{ t(item.nameKey) }}</span>
+              <div class="nav-indicator"></div>
+            </router-link>
+          </div>
+        </nav>
       </aside>
-      
+
+      <!-- 主内容区域 -->
       <main class="app-main">
-        <RouterView />
+        <RouterView v-slot="{ Component, route }">
+          <transition name="page" mode="out-in">
+            <component :is="Component" :key="route.path" />
+          </transition>
+        </RouterView>
       </main>
     </div>
   </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
-}
-
+<style scoped>
 .app-container {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  @apply h-screen w-full flex flex-col bg-background-light dark:bg-background-dark;
 }
 
 .app-header {
-  background: linear-gradient(135deg, #409eff 0%, #36cfc9 100%);
-  color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  height: 60px;
-  display: flex;
-  align-items: center;
+  @apply bg-gradient-to-r from-primary-500 to-secondary-500 shadow-soft z-50 h-16 flex items-center;
 }
 
 .header-content {
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  height: 100%;
-  width: 100%;
+  @apply flex items-center justify-between px-6 h-full w-full max-w-7xl mx-auto;
 }
 
 .logo-container {
-  display: flex;
-  align-items: center;
+  @apply flex items-center space-x-4;
 }
 
 .logo-icon {
-  font-size: 32px;
-  margin-right: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
+  @apply w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl transition-all duration-200 hover:bg-white/30;
 }
 
 .logo-text h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
+  @apply text-xl font-bold m-0 leading-tight;
 }
 
 .logo-subtitle {
-  font-size: 14px;
-  opacity: 0.8;
-  margin: 0;
-  margin-top: 5px;
+  @apply text-sm opacity-80 m-0 mt-1;
+}
+
+.header-actions {
+  @apply flex items-center space-x-2;
 }
 
 .main-container {
-  flex: 1;
-  width: 100%;
-  height: calc(100vh - 60px);
-  display: flex;
+  @apply flex-1 w-full flex overflow-hidden;
 }
 
 .app-aside {
-  width: 240px;
-  background-color: #fff;
-  border-right: 1px solid #e4e7ed;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  @apply w-64 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark shadow-soft;
 }
 
-.app-menu {
-  border-right: none;
-  height: 100%;
-  padding: 20px 0;
+.nav-container {
+  @apply h-full flex flex-col;
 }
 
-.menu-item {
-  height: 50px;
-  line-height: 50px;
-  margin-bottom: 5px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+.nav-header {
+  @apply px-6 py-4 border-b border-border-secondary-light dark:border-border-secondary-dark;
 }
 
-.menu-item:hover {
-  background-color: #f0f9ff;
+.nav-title {
+  @apply text-sm font-semibold uppercase tracking-wide;
 }
 
-.menu-item.is-active {
-  background-color: #ecf5ff;
-  color: #409eff;
+.nav-menu {
+  @apply flex-1 px-3 py-4 space-y-1;
 }
 
-.menu-icon {
-  font-size: 18px;
-  margin-right: 10px;
+.nav-item {
+  @apply flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 relative;
+  @apply text-text-secondary-light dark:text-text-secondary-dark;
+  @apply hover:bg-surface-secondary-light dark:hover:bg-surface-secondary-dark;
+  @apply hover:text-text-primary-light dark:hover:text-text-primary-dark;
 }
 
-.menu-text {
-  font-size: 15px;
-  font-weight: 500;
+.nav-item-active {
+  @apply bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400;
 }
+
+.nav-icon {
+  @apply w-5 h-5 mr-3 transition-colors duration-200;
+}
+
+.nav-item-active .nav-icon {
+  @apply text-primary-500;
+}
+
+.nav-text {
+  @apply flex-1;
+}
+
+  .nav-indicator {
+    @apply absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-primary-500 rounded-r transition-all duration-200 opacity-0;
+  }
+
+  .nav-item:hover .nav-indicator,
+  .nav-item-active .nav-indicator {
+    @apply opacity-100;
+  }
 
 .app-main {
-  flex: 1;
-  background-color: #f5f7fa;
-  padding: 0;
-  overflow-y: auto;
+  @apply flex-1 bg-background-secondary-light dark:bg-background-secondary-dark overflow-y-auto;
 }
 
-/* 限制坐标选择下拉框宽度 */
-.coordinate-select-dropdown {
-  max-width: 600px !important;
-  width: auto !important;
+/* 页面切换动画 */
+.page-enter-active,
+.page-leave-active {
+  @apply transition-all duration-300 ease-in-out;
 }
 
-.coordinate-select-dropdown .el-select-dropdown__wrap {
-  max-width: 600px !important;
+.page-enter-from {
+  @apply opacity-0 transform translate-x-4;
 }
 
-/* 全局限制所有下拉框的最大宽度（防止过宽） */
-.el-select-dropdown {
-  max-width: 600px !important;
-  width: auto !important;
+.page-leave-to {
+  @apply opacity-0 transform -translate-x-4;
 }
 
-.el-select-dropdown__wrap {
-  max-width: 600px !important;
+/* 滚动条样式 */
+.app-main::-webkit-scrollbar {
+  @apply w-2;
 }
 
+.app-main::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.app-main::-webkit-scrollbar-thumb {
+  @apply bg-border-light dark:bg-border-dark rounded-full;
+}
+
+.app-main::-webkit-scrollbar-thumb:hover {
+  @apply bg-border-secondary-light dark:bg-border-secondary-dark;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .app-aside {
+    @apply w-20;
+  }
+
+  .nav-header {
+    @apply px-3;
+  }
+
+  .nav-title {
+    @apply text-xs;
+  }
+
+  .nav-menu {
+    @apply px-2;
+  }
+
+  .nav-item {
+    @apply px-2 justify-center;
+  }
+
+  .nav-text {
+    @apply hidden;
+  }
+
+  .nav-icon {
+    @apply mr-0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    @apply px-4;
+  }
+
+  .logo-text h1 {
+    @apply text-lg;
+  }
+
+  .logo-subtitle {
+    @apply hidden;
+  }
+}
 </style>

@@ -1,0 +1,163 @@
+{
+  "common": {
+    "home": "首页",
+    "singleTransform": "单点转换",
+    "batchTransform": "批量转换",
+    "about": "关于",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "search": "搜索",
+    "filter": "筛选",
+    "export": "导出",
+    "import": "导入",
+    "copy": "复制",
+    "paste": "粘贴",
+    "selectAll": "全选",
+    "clear": "清空",
+    "reset": "重置",
+    "refresh": "刷新",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "finish": "完成",
+    "close": "关闭",
+    "open": "打开",
+    "yes": "是",
+    "no": "否"
+  },
+  "theme": {
+    "light": "浅色主题",
+    "dark": "深色主题",
+    "auto": "跟随系统",
+    "switchTheme": "切换主题"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "切换语言"
+  },
+  "navigation": {
+    "home": "首页",
+    "singleTransform": "单点转换",
+    "batchTransform": "批量转换",
+    "about": "关于",
+    "logoTitle": "CIM工具箱",
+    "logoSubtitle": "专业的坐标系转换工具"
+  },
+  "home": {
+    "title": "欢迎使用CIM工具箱",
+    "subtitle": "专业的坐标系转换工具，为您提供准确、高效的坐标转换服务",
+    "description": "支持多种坐标系之间的转换，包括WGS84、GCJ02、BD09、CGCS2000等常见坐标系，满足不同场景下的坐标转换需求。",
+    "features": {
+      "accuracy": {
+        "title": "高精度转换",
+        "description": "采用专业算法，确保坐标转换的精度和可靠性"
+      },
+      "speed": {
+        "title": "快速处理",
+        "description": "高效的计算引擎，支持单点和批量坐标转换"
+      },
+      "multiple": {
+        "title": "多种坐标系",
+        "description": "支持WGS84、GCJ02、BD09、CGCS2000等多种坐标系"
+      },
+      "userFriendly": {
+        "title": "易于使用",
+        "description": "简洁直观的操作界面，降低使用门槛"
+      },
+      "singleTransform": {
+        "title": "单点转换",
+        "description": "支持多种坐标系之间的单点坐标转换"
+      },
+      "batchTransform": {
+        "title": "批量转换",
+        "description": "支持批量坐标转换，提高工作效率"
+      },
+      "mapVisualization": {
+        "title": "地图可视化",
+        "description": "在地图上直观显示转换结果和位置信息"
+      },
+      "epsgSupport": {
+        "title": "EPSG支持",
+        "description": "支持标准EPSG坐标系编码，满足专业需求"
+      }
+    },
+    "stats": {
+      "coordinates": "支持坐标系",
+      "conversions": "累计转换",
+      "users": "活跃用户",
+      "accuracy": "转换精度"
+    },
+    "startUsing": "开始使用",
+    "learnMore": "了解更多"
+  },
+  "transform": {
+    "single": {
+      "title": "单点坐标转换",
+      "description": "支持多种坐标系之间的单点坐标转换，包括WGS84、GCJ02、BD09、CGCS2000等常见坐标系",
+      "sourceSystem": "源坐标系",
+      "targetSystem": "目标坐标系",
+      "sourceCoordinate": "源坐标",
+      "targetCoordinate": "目标坐标",
+      "longitude": "经度",
+      "latitude": "纬度",
+      "transform": "转换",
+      "clear": "清空",
+      "copyResult": "复制结果",
+      "showOnMap": "在地图上显示",
+      "addToBatch": "添加到批量转换",
+      "instructions": "使用说明",
+      "faq": "常见问题",
+      "tips": "操作提示"
+    },
+    "batch": {
+      "title": "批量坐标转换",
+      "description": "支持批量坐标转换，提高工作效率",
+      "upload": "上传文件",
+      "download": "下载结果",
+      "processing": "处理中...",
+      "completed": "转换完成",
+      "failed": "转换失败"
+    }
+  },
+  "coordinateSystems": {
+    "wgs84": {
+      "name": "WGS84坐标系",
+      "description": "世界大地坐标系，GPS使用的坐标系"
+    },
+    "gcj02": {
+      "name": "GCJ02坐标系",
+      "description": "火星坐标系，高德、腾讯地图使用"
+    },
+    "bd09": {
+      "name": "BD09坐标系",
+      "description": "百度坐标系，百度地图使用"
+    },
+    "cgcs2000": {
+      "name": "CGCS2000坐标系",
+      "description": "国家2000坐标系，中国官方坐标系"
+    }
+  },
+  "errors": {
+    "invalidCoordinate": "无效的坐标值",
+    "transformFailed": "坐标转换失败",
+    "networkError": "网络连接错误",
+    "fileTooLarge": "文件过大",
+    "unsupportedFormat": "不支持的文件格式",
+    "missingData": "缺少必要数据"
+  },
+  "messages": {
+    "transformSuccess": "坐标转换成功",
+    "copySuccess": "已复制到剪贴板",
+    "fileUploaded": "文件上传成功",
+    "settingsSaved": "设置已保存"
+  }
+}
+
